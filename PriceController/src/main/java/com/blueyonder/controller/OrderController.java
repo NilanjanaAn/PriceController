@@ -33,11 +33,6 @@ public class OrderController {
 		return new ResponseEntity<>(orderService.addOrder(order),HttpStatus.OK);
 	}
 	
-	@GetMapping("/get/purchasedOrNot")
-	public ResponseEntity<Map<Long,Long>> getPurchasedOrder() {
-		return new ResponseEntity<>(orderService.getPIDs());
-	}
-	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity deleteOrderDetail(@PathVariable Long id) {
 		return orderService.deleteOrder(id);

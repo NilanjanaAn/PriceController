@@ -1,6 +1,7 @@
 package com.blueyonder.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,11 @@ public class OrderController {
 	@PostMapping("/add")
 	public ResponseEntity<Order> addOrderDetails(@RequestBody Order order){
 		return new ResponseEntity<>(orderService.addOrder(order),HttpStatus.OK);
+	}
+	
+	@GetMapping("/get/purchasedOrNot")
+	public ResponseEntity<Map<Long,Long>> getPurchasedOrder() {
+		return new ResponseEntity<>(orderService.getPIDs());
 	}
 	
 	@DeleteMapping("/delete/{id}")

@@ -1,6 +1,8 @@
 package com.blueyonder.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,15 @@ public class OrderService {
 
 	public Order addOrder(Order order) {
 		return orderRepo.save(order);
+	}
+
+	public Map<Long,Long> getPIDs() {
+		Map<Long,Long> mp=new HashMap<>();
+		List<Order> order=orderRepo.findAllDataByTime(5);
+		for(int i=0;i<order.size();i++) {
+			order
+		}
+		return null;
 	}
 
 }

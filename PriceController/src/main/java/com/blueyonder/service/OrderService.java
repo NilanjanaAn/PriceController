@@ -1,5 +1,6 @@
 package com.blueyonder.service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,16 +42,13 @@ public class OrderService {
 	}
 
 	public Order addOrder(Order order) {
+		final String uri = "http://localhost:8080/api/product/updateQuantity";
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.put(uri, Void.class);
+		order.setDate_time(LocalDateTime.now());
+		double price=0.0;
+//		calculate total price also
 		return orderRepo.save(order);
-	}
-
-	public Map<Long,Long> getPIDs() {
-		Map<Long,Long> mp=new HashMap<>();
-		List<Order> order=orderRepo.findAllDataByTime(5);
-		for(int i=0;i<order.size();i++) {
-			order
-		}
-		return null;
 	}
 
 }

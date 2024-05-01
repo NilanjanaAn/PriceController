@@ -33,7 +33,9 @@ public class Product {
 	private int sold_qty;
 	
 	private double price;
-	
-	private LocalDateTime date_time;
-	
+
+	private LocalDateTime last_checked_date_time;
+
+	private LocalDateTime last_updated_date_time;
+
 }

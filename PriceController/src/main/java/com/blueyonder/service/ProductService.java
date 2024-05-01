@@ -15,32 +15,32 @@ import com.blueyonder.repository.ProductRepo;
 @Service
 public class ProductService {
 
-	@Autowired
-	private ProductRepo repo;
-	
-	public List<Product> getProduct(){
-		return repo.findAll();
-	}
+  @Autowired
+  private ProductRepo repo;
 
-	public Product addProduct(Product product) {
-		product.setDate_time(LocalDateTime.now());
-		return repo.save(product);
-	}
+  private Long threshold = 10L;
 
-	public void updateProductData() {
-		repo.modifyProductData();
-		
-	}
+  public List<Product> getProduct() {
+    return repo.findAll();
+  }
 
-	public void modify(Long p_id, Long p_qty) {
-		repo.modifyProductQuantity(p_id,p_qty);
-		
-	}
+  public Product addProduct(Product product) {
+    product.setLast_updated_date_time(LocalDateTime.now());
+    return repo.save(product);
+  }
 
-	public ResponseEntity updateProductData(Order order) {
-		for(int i=0;i<order.getP_id().size();i++) {
-			modify(order.getP_id().get(i),order.getP_qty().get(i));
-		}
-		return new ResponseEntity(HttpStatus.OK);
-	}
+  public void updateProductData() {
+    repo.modifyProductData(threshold);
+  }
+
+  public void modify(Long p_id, Long p_qty) {
+    repo.modifyProductQuantity(p_id, p_qty);
+  }
+
+  public ResponseEntity updateProductData(Order order) {
+    for (int i = 0; i < order.getP_id().size(); i++) {
+      modify(order.getP_id().get(i), order.getP_qty().get(i));
+    }
+    return new ResponseEntity(HttpStatus.OK);
+  }
 }

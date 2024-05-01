@@ -14,8 +14,19 @@ public interface ProductRepo extends JpaRepository<Product,Long>  {
 
 	@Modifying
     @Transactional
-	@Query(value="update product set price=price+price*20/100, date_time = CURRENT_TIMESTAMP",nativeQuery=true)
-	void modifyProductData();
+//	@Query(value="update product set price=price+price*20/100, date_time = CURRENT_TIMESTAMP",nativeQuery=true)
+	@Query(value="update product set\n" +
+			"price = CASE\n" +
+			"WHEN sold_qty<:threshold THEN price-price*5/100\n" +
+			"ELSE price\n" +
+			"END,\n" +
+			"last_updated_date_time = CASE\n" +
+			"WHEN sold_qty<:threshold THEN CURRENT_TIMESTAMP\n" +
+			"ELSE last_updated_date_time\n" +
+			"END,\n" +
+			"last_checked_date_time = CURRENT_TIMESTAMP,\n" +
+			"sold_qty = 0",nativeQuery=true)
+	void modifyProductData(Long threshold);
 
 	@Modifying
     @Transactional

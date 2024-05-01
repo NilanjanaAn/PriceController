@@ -42,10 +42,11 @@ public class OrderService {
 	}
 
 	public Order addOrder(Order order) {
+		order.setDate_time(LocalDateTime.now());
 		final String uri = "http://localhost:8080/api/product/updateQuantity";
 		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.put(uri, Void.class);
-		order.setDate_time(LocalDateTime.now());
+		restTemplate.put(uri, order);
+		
 		double price=0.0;
 //		calculate total price also
 		return orderRepo.save(order);

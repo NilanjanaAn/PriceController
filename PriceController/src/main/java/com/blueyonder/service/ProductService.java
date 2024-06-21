@@ -2,6 +2,7 @@ package com.blueyonder.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.blueyonder.model.Order;
 import com.blueyonder.model.Product;
 import com.blueyonder.repository.ProductRepo;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ProductService {
@@ -21,7 +23,14 @@ public class ProductService {
   private Long threshold = 10L;
 
   public List<Product> getProduct() {
-    return repo.findAll();
+    return repo.getAllSorted();
+  }
+
+  public Optional<Product> getProductById(Long p_id) {
+    Optional<Product> p = repo.findById(p_id);
+    if (p.isEmpty())
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The requested product is not present");
+    return p;
   }
 
   public Product addProduct(Product product) {

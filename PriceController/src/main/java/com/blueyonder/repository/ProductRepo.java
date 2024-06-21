@@ -9,8 +9,13 @@ import com.blueyonder.model.Product;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepo extends JpaRepository<Product,Long>  {
+
+	@Query(value="select * from product order by p_id",nativeQuery=true)
+	List<Product> getAllSorted();
 
 	@Modifying
     @Transactional
